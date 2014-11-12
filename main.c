@@ -24,10 +24,14 @@ int main(){
 	scanf("%d",&num);
 
     int compSeq = 0;
-	if(pesqSeq(vetor, num, &compSeq, TAM_MAX))
+    int compBin = 0;
+	if(pesqSeq(vetor, num, TAM_MAX, &compSeq) | pesqBin(vetor, num,1, TAM_MAX, &compBin))
 		printf("Parabéns! Você ganhou o sorteio!\n");
 	else
 		printf("Infelizmente seu número não foi encontrado.\n");
+
+	printf("Número comparações da pesquisa sequencial: %d\n", compSeq);
+	printf("Número comparações da pesquisa binária: %d\n", compBin);
 
 	return 0;
 }
@@ -35,10 +39,10 @@ int main(){
 void printVetor(int vetor[]){
 	int i;
 	printf("[");
-	for(i=1;i<TAM_MAX+1;i++){
+	for(i=1;i<TAM_MAX;i++){
 		printf("%d, ", vetor[i]);
 	}
-	printf("]\n");
+	printf("%d ]\n", vetor[i]);
 }
 
 void preencherVetor(int vetor[], int tam){
