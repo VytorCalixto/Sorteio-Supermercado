@@ -1,18 +1,4 @@
-typedef struct{
-    FILE *file; //Arquivo do log
-}Logger;
-
-Logger logger;
-
-//Salva uma mensagem de texto no arquivo
-void logMessage(char *logMsg);
-
-//Inicia o logger abrindo o arquivo e colocando as informações iniciais.
-void startLogger(char *path);
-
-//Termina o logger desalocando da memória
-void endLogger();
-
+#include "logger.h"
 void logMessage(char *logMsg){
   if(logger.file != NULL){
     fprintf(logger.file, "%s", logMsg);

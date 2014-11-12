@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "logger/logger.c"
+#include "logger/logger.h"
 
 #define TAM_MAX 256
 
@@ -68,3 +68,4 @@ void mergeSort(int vetor[], int vetAux[], int esq, int dir){
 			vetor[k]=vetAux[i]<vetAux[j] ? vetAux[i++]:vetAux[j--];
 	}
 }
+
