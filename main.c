@@ -60,12 +60,12 @@ void mergeSort(int vetor[], int vetAux[], int esq, int dir){
 		meio = (dir+esq)/2;
 		mergeSort(vetor, vetAux, esq, meio);
 		mergeSort(vetor, vetAux, meio+1, dir);
-		for(i=meio+1;i>1;i--)
+		for(i=meio+1;i>esq;i--)
 			vetAux[i-1]=vetor[i-1];
 		for(j=meio;j<dir;j++)
 			vetAux[dir+meio-j]=vetor[j+1];
-		for(k=1;k<=dir;k++)
-			vetor[k]=vetAux[i]<vetAux[j] ? vetAux[i++]:vetAux[j--];
+		for(k=esq;k<=dir;k++)
+			vetor[k]=(vetAux[i]<vetAux[j]) ? vetAux[i++]:vetAux[j--];
 	}
 }
 
