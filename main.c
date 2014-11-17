@@ -64,6 +64,7 @@ void sorteio(){
 	int vetor[TAM_MAX+1], num;
 	preencherVetor(vetor, TAM_MAX+1);
 	//TODO:Imprimir vetor(quando?)
+	printVetor(vetor);
 	printf("Escolha um número entre 1 e 512:\n");
 	scanf("%d",&num);
 
@@ -92,8 +93,11 @@ int pesquisar(int vetor[], int num, int *compSeq, int *compBin){
 
 void ordenar(int vetor[], int *compQuick, int *compQuickMed, int *compMerge){
 	int vetAux[TAM_MAX+1];
+	//FIXME: Contagem está errada?
 	mergeSort(vetor,vetAux,1,TAM_MAX, compMerge);
-	//TODO:QuickSort
+	//TODO: Vetor não deveria estar "desordenado"?
+	quickSort(vetor, 1, TAM_MAX, 0, compQuick);
+	quickSort(vetor, 1, TAM_MAX, 1, compQuickMed);
 }
 
 void printVetor(int vetor[]){

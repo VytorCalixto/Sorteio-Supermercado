@@ -1,4 +1,5 @@
 lol.txt
 main
 *.o
+logger/*.o
 *.swp
