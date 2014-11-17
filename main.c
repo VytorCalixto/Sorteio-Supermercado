@@ -75,6 +75,7 @@ void sorteio(){
 	printf("Número comparações do QuickSort utilizando o 1º elemento como pivô: %d\n", compQuick);
 	printf("Número comparações do QuickSort utilizando a mediana como pivô: %d\n", compQuickMed);
 	printf("Número comparações do MergeSort: %d\n", compMerge);
+    printVetor(vetor);
 
     int compSeq = 0;
     int compBin = 0;
@@ -95,9 +96,10 @@ void ordenar(int vetor[], int *compQuick, int *compQuickMed, int *compMerge){
 	int vetAux[TAM_MAX+1];
 	//FIXME: Contagem está errada?
 	mergeSort(vetor,vetAux,1,TAM_MAX, compMerge);
+    
 	//TODO: Vetor não deveria estar "desordenado"?
 	quickSort(vetor, 1, TAM_MAX, 0, compQuick);
-	quickSort(vetor, 1, TAM_MAX, 1, compQuickMed);
+    quickSort(vetor, 1, TAM_MAX, 1, compQuickMed);
 }
 
 void printVetor(int vetor[]){

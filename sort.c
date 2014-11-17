@@ -12,8 +12,8 @@ void mergeSort(int vetor[], int vetAux[], int esq, int dir, int *nComp){
 			vetAux[dir+meio-j]=vetor[j+1];
 		for(k=esq;k<=dir;k++)
 	        vetor[k]= (vetAux[i] < vetAux[j]) ? vetAux[i++] : vetAux[j--];
-        (*nComp)++;
     }
+    (*nComp)++;
 }
 
 int mediana(int a, int b, int c){
@@ -28,11 +28,10 @@ int mediana(int a, int b, int c){
 void particao(int vetor[], int esq, int dir, int *posPivo, int tipoParticao, int *nComp){
     int i, j, pivo, aux;
     //Se tipoParticao > 0, usa a mediana. Se não, pega o primeiro elemento
-    aux = tipoParticao ? mediana(vetor[esq], vetor[(esq+dir)/2], vetor[dir]) : vetor[esq];
+    pivo = (tipoParticao != 0) ? mediana(vetor[esq], vetor[(esq+dir)/2], vetor[dir]) : vetor[esq];
     i = esq;
     j = dir;
     while(i < j){
-        (*nComp)++;
         while((vetor[i] <= pivo) && (i < dir))
             i++;
         while(vetor[j] > pivo)
@@ -55,4 +54,5 @@ void quickSort(int vetor[], int esq, int dir, int tipoParticao, int *nComp){
        quickSort(vetor, esq, posPivo - 1, tipoParticao, nComp);
        quickSort(vetor, posPivo + 1, dir, tipoParticao, nComp);
    }
+   (*nComp)++;
 }
