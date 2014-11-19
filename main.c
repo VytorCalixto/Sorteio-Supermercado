@@ -114,5 +114,5 @@ void printVetor(int vetor[]){
 void preencherVetor(int vetor[], int tam){
 	int i;
 	for(i=1;i<tam;i++)
-		vetor[i] = (rand() % 512)+1;
+		vetor[i] = i;//(rand() % 512)+1;
 }
