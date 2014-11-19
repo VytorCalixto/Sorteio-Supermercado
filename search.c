@@ -7,6 +7,7 @@ int pesqSeq(int vetor[], int valor, int tamVetor, int *nComp){
     	(*nComp)++;
         posicao--;
     }
+    (*nComp)++;
     return posicao;
 }
 

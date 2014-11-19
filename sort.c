@@ -36,6 +36,7 @@ void particao(int vetor[], int esq, int dir, int *posPivo, int tipoParticao, int
     j = dir;
     while(i < j){
         while((vetor[i] <= pivo) && (i < dir)){
+            (*nComp)++;
             i++;
         }
         while(vetor[j] > pivo){
@@ -56,8 +57,9 @@ void particao(int vetor[], int esq, int dir, int *posPivo, int tipoParticao, int
 void quickSort(int vetor[], int esq, int dir, int tipoParticao, int *nComp){
    int posPivo;
    if(esq < dir){
-       particao(vetor, esq, dir, &posPivo, tipoParticao, nComp);
-       quickSort(vetor, esq, posPivo - 1, tipoParticao, nComp);
-       quickSort(vetor, posPivo + 1, dir, tipoParticao, nComp);
+        (*nComp)++;
+        particao(vetor, esq, dir, &posPivo, tipoParticao, nComp);
+        quickSort(vetor, esq, posPivo - 1, tipoParticao, nComp);
+        quickSort(vetor, posPivo + 1, dir, tipoParticao, nComp);
    }
 }
