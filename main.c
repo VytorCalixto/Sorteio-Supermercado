@@ -9,25 +9,34 @@
 
 void preencherVetor(int vetor[], int tam);
 void printVetor(int vetor[]);
+void sorteio(int vetor[]);
+void calcularMedia();
 void ordenar(int vetor[], int *compQuick, int *compQuickMed, int *compMerge);
 void copiarVetor(int *fonte, int *destino, int tam);
 
 int main(){
     srand(time(NULL));
     puts("Bem vindo ao Supermercado Algorítmico!");
-    int opcao;
+    int opcao, opcaoPrint=0;
+    int vetor[TAM_MAX+1];
     do{
         puts("\nO que você gostaria de fazer:");
         puts("1. Participar do sorteio");
         puts("2. Calcular média de comparações dos algoritmos");
+        if(opcaoPrint)
+            puts("3. Imprimir vetor do último sorteio");
         puts("0. Sair");
         scanf("%d",&opcao);
         printf("\n");
 
-        if(opcao == 1)
-            sorteio();
+        if(opcao == 1){
+            opcaoPrint = 1;
+            sorteio(vetor);
+        }
         else if(opcao == 2)
             calcularMedia();
+        else if(opcao == 3)
+            printVetor(vetor);
         else if(opcao != 0)
             puts("Opção inválida");
     }while(opcao != 0);
@@ -61,35 +70,33 @@ void calcularMedia(){
     printf("Média de comparações da pesquisa binária: %d\n", somaBin/x);
 }
 
-void sorteio(){
-    int vetor[TAM_MAX+1], num, achou=0;
+void sorteio(int vetor[]){
+    int num, achouSeq=0, achouBin=0;
     preencherVetor(vetor, TAM_MAX+1);
-    //TODO:Imprimir vetor(quando?)
-    printVetor(vetor);
+
     printf("Escolha um número entre 1 e 512:\n");
     scanf("%d",&num);
 
     int compSeq = 0;
-    achou = pesqSeq(vetor, num, TAM_MAX, &compSeq);
+    achouSeq = pesqSeq(vetor, num, TAM_MAX, &compSeq);
 
     int compQuick=0;
     int compQuickMed=0;
     int compMerge=0;
     ordenar(vetor,&compQuick,&compQuickMed,&compMerge);
-    printVetor(vetor);
-    printf("Número comparações do QuickSort utilizando o 1º elemento como pivô: %d\n", compQuick);
-    printf("Número comparações do QuickSort utilizando a mediana como pivô: %d\n", compQuickMed);
-    printf("Número comparações do MergeSort: %d\n", compMerge);
 
     int compBin = 0;
-    //FIXME:pesqBin só funciona as vezes .-.
-    if(achou | pesqBin(vetor, num,1, TAM_MAX, &compBin))
+    achouBin = pesqBin(vetor, num,1, TAM_MAX, &compBin);
+    if(achouSeq && achouBin)
         printf("Parabéns! Você ganhou o sorteio!\n");
     else
         printf("Infelizmente seu número não foi encontrado.\n");
 
     printf("Número comparações da pesquisa sequencial: %d\n", compSeq);
     printf("Número comparações da pesquisa binária: %d\n", compBin);
+    printf("Número comparações do QuickSort utilizando o 1º elemento como pivô: %d\n", compQuick);
+    printf("Número comparações do QuickSort utilizando a mediana como pivô: %d\n", compQuickMed);
+    printf("Número comparações do MergeSort: %d\n", compMerge);
 }
 
 void ordenar(int vetor[], int *compQuick, int *compQuickMed, int *compMerge){
@@ -107,6 +114,7 @@ void ordenar(int vetor[], int *compQuick, int *compQuickMed, int *compMerge){
 
 void copiarVetor(int *fonte, int *destino, int tam){
     int i;
+    //Incrementa a posição dos ponteiros e copia o conteúdo dessa nova posição p/ a posição equivalente no outro vetor, até atingir o tamanho do vetor
     for(i=0;i<tam;i++,destino++,fonte++)
         *destino=*fonte;
 }
@@ -117,7 +125,7 @@ void printVetor(int vetor[]){
     for(i=1;i<TAM_MAX;i++){
         printf("%d, ", vetor[i]);
     }
-    printf("%d ]\n", vetor[i]);
+    printf("%d]\n", vetor[i]);
 }
 
 void preencherVetor(int vetor[], int tam){
