@@ -16,6 +16,7 @@ void copiarVetor(int *fonte, int *destino, int tam);
 
 int main(){
     srand(time(NULL));
+    startLogger("log.txt");
     puts("Bem vindo ao Supermercado Algorítmico!");
     int opcao, opcaoPrint=0;
     int vetor[TAM_MAX+1];
@@ -30,17 +31,22 @@ int main(){
         printf("\n");
 
         if(opcao == 1){
+            logMessage("O cliente resolveu participar do sorteio!\n");
             opcaoPrint = 1;
             sorteio(vetor);
         }
         else if(opcao == 2)
             calcularMedia();
-        else if(opcao == 3)
+        else if(opcao == 3){
+            logMessage("Veja o vetor:\n");
+            logVetor(vetor);
             printVetor(vetor);
+        }
         else if(opcao != 0)
             puts("Opção inválida");
     }while(opcao != 0);
 
+    endLogger();
     return 0;
 }
 
@@ -49,6 +55,9 @@ void calcularMedia(){
     int i,x,num;
     printf("Entre com um número X de vezes que os algoritmos devem ser executados:\n");
     scanf("%d",&x);
+    char log[256];
+    sprintf(log, "Os algoritmos de busca e ordenação serão executados %d vezes.\n", x);
+    logMessage(log);
 
     int somaQuick=0;
     int somaQuickMed=0;
@@ -64,10 +73,20 @@ void calcularMedia(){
         pesqBin(vetor, num,1, TAM_MAX, &somaBin);
     }
     printf("Média de comparações do QuickSort utilizando o 1º elemento como pivô: %d\n", somaQuick/x);
+    sprintf(log,"Média de comparações do QuickSort utilizando o 1º elemento como pivô: %d\n", somaQuick/x);
+    logMessage(log);
     printf("Média de comparações do QuickSort utilizando a mediana como pivô: %d\n", somaQuickMed/x);
+    sprintf(log,"Média de comparações do QuickSort utilizando a mediana como pivô: %d\n", somaQuickMed/x);
+    logMessage(log);
     printf("Média de comparações do MergeSort: %d\n", somaMerge/x);
+    sprintf(log,"Média de comparações do MergeSort: %d\n", somaMerge/x);
+    logMessage(log);
     printf("Média de comparações da pesquisa sequencial: %d\n", somaSeq/x);
+    sprintf(log,"Média de comparações da pesquisa sequencial: %d\n", somaSeq/x);
+    logMessage(log);
     printf("Média de comparações da pesquisa binária: %d\n", somaBin/x);
+    sprintf(log,"Média de comparações da pesquisa binária: %d\n", somaBin/x);
+    logMessage(log);
 }
 
 void sorteio(int vetor[]){
@@ -76,6 +95,9 @@ void sorteio(int vetor[]){
 
     printf("Escolha um número entre 1 e 512:\n");
     scanf("%d",&num);
+    char log[256];
+    sprintf(log, "O número escolhido foi %d\n", num);
+    logMessage(log);
 
     int compSeq = 0;
     achouSeq = pesqSeq(vetor, num, TAM_MAX, &compSeq);
@@ -87,16 +109,30 @@ void sorteio(int vetor[]){
 
     int compBin = 0;
     achouBin = pesqBin(vetor, num,1, TAM_MAX, &compBin);
-    if(achouSeq && achouBin)
+    if(achouSeq && achouBin){
         printf("Parabéns! Você ganhou o sorteio!\n");
-    else
+        logMessage("Parabéns! Você ganhou o sorteio!\n");
+    }
+    else{
         printf("Infelizmente seu número não foi encontrado.\n");
+        logMessage("Infelizmente seu número não foi encontrado.\n");
+    }
 
     printf("Número comparações da pesquisa sequencial: %d\n", compSeq);
+    sprintf(log,"Número comparações da pesquisa sequencial: %d\n", compSeq);
+    logMessage(log);
     printf("Número comparações da pesquisa binária: %d\n", compBin);
+    sprintf(log,"Número comparações da pesquisa binária: %d\n", compBin);
+    logMessage(log);
     printf("Número comparações do QuickSort utilizando o 1º elemento como pivô: %d\n", compQuick);
+    sprintf(log,"Número comparações do QuickSort utilizando o 1º elemento como pivô: %d\n", compQuick);
+    logMessage(log);
     printf("Número comparações do QuickSort utilizando a mediana como pivô: %d\n", compQuickMed);
+    sprintf(log, "Número comparações do QuickSort utilizando a mediana como pivô: %d\n", compQuickMed);
+    logMessage(log);
     printf("Número comparações do MergeSort: %d\n", compMerge);
+    sprintf(log, "Número comparações do MergeSort: %d\n\n", compMerge);
+    logMessage(log);
 }
 
 void ordenar(int vetor[], int *compQuick, int *compQuickMed, int *compMerge){
@@ -126,6 +162,21 @@ void printVetor(int vetor[]){
         printf("%d, ", vetor[i]);
     }
     printf("%d]\n", vetor[i]);
+}
+
+void logVetor(int vetor[]){
+    int i;
+    char valor[6];
+    logMessage("[");
+    for(i=1; i < TAM_MAX; i++){
+        sprintf(valor, "%d\t", vetor[i]);
+        logMessage(valor);
+        if(i % 8 == 0){
+            logMessage("\n");
+        }
+    }
+    sprintf(valor, "%d]\n", vetor[i]);
+    logMessage(valor);
 }
 
 void preencherVetor(int vetor[], int tam){
